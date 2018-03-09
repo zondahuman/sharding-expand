@@ -3,7 +3,7 @@ CREATE TABLE flicker (
             stub char(1) NOT NULL default '',
             PRIMARY KEY  (id),
             UNIQUE KEY stub (stub)
-)ENGINE=InnoDB COMMENT '表名汇总';
+)ENGINE=InnoDB COMMENT 'flicker primary key Identity';
 
 
 REPLACE INTO Tickets64 (stub) VALUES ('a');
