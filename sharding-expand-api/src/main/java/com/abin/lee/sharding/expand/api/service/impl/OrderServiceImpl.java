@@ -2,6 +2,7 @@ package com.abin.lee.sharding.expand.api.service.impl;
 
 import com.abin.lee.sharding.expand.api.datasource.SelectIdentity;
 import com.abin.lee.sharding.expand.api.enums.DataSourceType;
+import com.abin.lee.sharding.expand.api.logic.LocationService;
 import com.abin.lee.sharding.expand.api.mapper.OrderMapper;
 import com.abin.lee.sharding.expand.api.model.Order;
 import com.abin.lee.sharding.expand.api.model.OrderExample;
@@ -29,13 +30,18 @@ public class OrderServiceImpl implements OrderService {
     OrderMapper orderMapper;
     @Autowired
     ShardingExchange shardingExchange;
+    @Autowired
+    LocationService locationService;
+
+
+
 
     @Override
     @SelectIdentity(source = DataSourceType.master)
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
     @Transactional(propagation= Propagation.REQUIRED)
     public void add(Long userId, Order model) {
-        String tableName = this.shardingExchange.shardingTableName(userId);
+        String tableName = this.locationService.locationTable(userId);
         log.info("TABLENAME-------------= " + tableName);
         this.orderMapper.insert(tableName, model);
 //        if(true)
@@ -47,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
     @Transactional(propagation= Propagation.REQUIRED)
     public void update(Long id, Order model) {
-        String tableName = this.shardingExchange.shardingTableName(id);
+        String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         Order order = this.orderMapper.selectByPrimaryKey(tableName, id);
         if(ObjectUtils.notEqual(null, order)){
@@ -66,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
     @Transactional(propagation= Propagation.REQUIRED)
     public void delete(Long id) {
-        String tableName = this.shardingExchange.shardingTableName(id);
+        String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         this.orderMapper.deleteByPrimaryKey(tableName, id);
     }
@@ -76,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
     @Transactional(propagation= Propagation.REQUIRED)
     public void deleteByParams(Long id, String orderName) {
-        String tableName = this.shardingExchange.shardingTableName(id);
+        String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         OrderExample example = new OrderExample();
         String condition = "%" + orderName + "%" ;
@@ -89,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
     @SelectIdentity(source = DataSourceType.slave)
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
     public Order findById(Long id) {
-        String tableName = this.shardingExchange.shardingTableName(id);
+        String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         return this.orderMapper.selectByPrimaryKey(tableName, id);
     }

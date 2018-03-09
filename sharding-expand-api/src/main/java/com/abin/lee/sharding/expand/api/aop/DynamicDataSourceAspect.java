@@ -4,6 +4,7 @@ import com.abin.lee.sharding.expand.api.datasource.DynamicDataSourceContextHolde
 import com.abin.lee.sharding.expand.api.datasource.SelectIdentity;
 import com.abin.lee.sharding.expand.api.enums.BusinessNameType;
 import com.abin.lee.sharding.expand.api.enums.LocationSwitchEnum;
+import com.abin.lee.sharding.expand.api.logic.LocationService;
 import com.abin.lee.sharding.expand.api.util.ShardingExchange;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.*;
@@ -32,6 +33,9 @@ public class DynamicDataSourceAspect {
 
     @Autowired
     ShardingExchange shardingExchange;
+    @Autowired
+    LocationService locationService;
+
 
     @Pointcut("execution(* com.abin.lee.sharding.dbtable.api.service.impl..*.*(..))")
     public void pointCut() {
@@ -58,11 +62,9 @@ public class DynamicDataSourceAspect {
         } else {
             functionId = (long) nameAndArgs.get("id");
         }
-        Long dbId = this.shardingExchange.selectShardingDatabase(functionId);
-
+        String businessName = this.locationService.locationDb(functionId);
         String typeName = typeName(joinPoint);
-        String businessName = businessType(joinPoint);
-        String dataSource = businessName + "" + dbId + "-" + typeName;
+        String dataSource = businessName + "-" + typeName;
         log.info("DATABASE-------------= " + dataSource);
         //为了省事，其他代码就不写了，
         // 切换数据源
@@ -70,19 +72,7 @@ public class DynamicDataSourceAspect {
 
     }
 
-    public static String businessType(JoinPoint joinPoint) throws ClassNotFoundException {
-        String result = "";
-        String classType = joinPoint.getTarget().getClass().getName();
-        Class<?> clazz = Class.forName(classType);
-        String clazzName = clazz.getName();
-        String resultName = clazzName.toLowerCase();
-        if (resultName.contains(BusinessNameType.order.name())) {
-            result = BusinessNameType.order.name();
-        } else {
-            result = BusinessNameType.business.name();
-        }
-        return result;
-    }
+
 
     public static String typeName(JoinPoint joinPoint) throws Throwable {
         String result = "";
