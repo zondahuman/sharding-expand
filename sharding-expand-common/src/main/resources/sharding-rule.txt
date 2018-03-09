@@ -1,0 +1,35 @@
+DROP DATABASE IF EXISTS sharding-rule;
+CREATE DATABASE IF NOT EXISTS sharding-rule;
+use sharding-rule;
+
+create table shard (
+  id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
+  name varchar(64)  COMMENT 'name',
+  hash_value varchar(64)  COMMENT 'hashvalue',
+  create_time datetime COMMENT '创建时间',
+  update_time datetime COMMENT '更新时间',
+  version int COMMENT '版本号'
+);
+
+create table shard_group (
+  id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
+  name varchar(64)  COMMENT 'name',
+  writable boolean  COMMENT 'writable',
+  startId bigint(20) NOT NULL COMMENT 'startId',
+  endId bigint(20) NOT NULL COMMENT 'endId',
+  create_time datetime COMMENT '创建时间',
+  update_time datetime COMMENT '更新时间',
+  version int COMMENT '版本号'
+);
+
+create table fragment (
+  id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
+  name varchar(64)  COMMENT 'name',
+  startId bigint(20) NOT NULL COMMENT 'startId',
+  endId bigint(20) NOT NULL COMMENT 'endId',
+  create_time datetime COMMENT '创建时间',
+  update_time datetime COMMENT '更新时间',
+  version int COMMENT '版本号'
+);
+
+
