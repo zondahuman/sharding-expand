@@ -6,6 +6,7 @@ import com.abin.lee.sharding.expand.api.enums.BusinessNameType;
 import com.abin.lee.sharding.expand.api.enums.LocationSwitchEnum;
 import com.abin.lee.sharding.expand.api.logic.LocationService;
 import com.abin.lee.sharding.expand.api.util.ShardingExchange;
+import com.abin.lee.sharding.expand.common.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.*;
 import org.apache.ibatis.javassist.bytecode.CodeAttribute;
@@ -62,7 +63,11 @@ public class DynamicDataSourceAspect {
         } else {
             functionId = (long) nameAndArgs.get("id");
         }
+        log.info("datasource ==  ", JsonUtil.toJson(DynamicDataSourceContextHolder.dataSourceIds));
+        DynamicDataSourceContextHolder.setDataSourceType("dataSource");
         String businessName = this.locationService.locationDb(functionId);
+        DynamicDataSourceContextHolder.clearDataSourceType();
+
         String typeName = typeName(joinPoint);
         String dataSource = businessName + "-" + typeName;
         log.info("DATABASE-------------= " + dataSource);
