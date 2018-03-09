@@ -6,31 +6,65 @@ create table shard_group (
   id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
   name varchar(64)  COMMENT 'db group name',
   writable boolean  COMMENT 'writable',
-  startId bigint(20) NOT NULL COMMENT 'startId',
-  endId bigint(20) NOT NULL COMMENT 'endId',
-  create_time datetime COMMENT '创建时间',
-  update_time datetime COMMENT '更新时间',
-  version int COMMENT '版本号'
+  start_id bigint(20) NOT NULL COMMENT 'startId',
+  end_id bigint(20) NOT NULL COMMENT 'endId'
 )ENGINE=InnoDB COMMENT '数据库集群名汇总';
 
 create table shard (
   id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
   name varchar(64)  COMMENT 'db name',
-  hash_value varchar(64)  COMMENT 'id hashvalue',
-  create_time datetime COMMENT '创建时间',
-  update_time datetime COMMENT '更新时间',
-  version int COMMENT '版本号'
+  group_id bigint(20) NOT NULL COMMENT '数据库集群id',
+  hash_value varchar(1024)  COMMENT 'id hashvalue'
 )ENGINE=InnoDB COMMENT '数据库名汇总';
 
 
 create table fragment (
   id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
   name varchar(64)  COMMENT 'table name',
-  startId bigint(20) NOT NULL COMMENT 'startId',
-  endId bigint(20) NOT NULL COMMENT 'endId',
-  create_time datetime COMMENT '创建时间',
-  update_time datetime COMMENT '更新时间',
-  version int COMMENT '版本号'
+  shard_id bigint(20) NOT NULL COMMENT '数据库id',
+  start_id bigint(20) NOT NULL COMMENT 'startId',
+  end_id bigint(20) NOT NULL COMMENT 'endId'
 )ENGINE=InnoDB COMMENT '表名汇总';
+
+
+
+
+
+
+
+
+
+
+INSERT INTO `shardingrule`.`shard_group`(`id`, `name`, `writable`, `start_id`, `end_id`) VALUES (1, 'OrderShardGroup0', 1, 0, 100000 );
+
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1000, 'order0-master', 1, '0');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1001, 'order1-master', 1, '1');
+
+
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10001, 'order0', 1000, 0, 100);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10002, 'order1', 1000, 100, 200);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10003, 'order2', 1001, 200, 300);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10004, 'order3', 1001, 300, 400);
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1000, 'order0', 1, '0');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1001, 'order1', 1, '1,2');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1002, 'order2', 1, '3,4');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1003, 'order3', 1, '5');
+
+
+
+
+
 
 

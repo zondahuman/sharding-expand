@@ -30,22 +30,22 @@ spring:
                                   password: root
                                   driverClassName: com.mysql.jdbc.Driver
                   order2-master:
-                                  url: jdbc:mysql://172.16.2.134:33066/order0?characterEncoding=UTF-8
+                                  url: jdbc:mysql://172.16.2.134:33066/order2?characterEncoding=UTF-8
                                   username: root
                                   password: root
                                   driverClassName: com.mysql.jdbc.Driver
                   order2-slave:
-                                  url: jdbc:mysql://172.16.2.134:33066/order0?characterEncoding=UTF-8
+                                  url: jdbc:mysql://172.16.2.134:33066/order2?characterEncoding=UTF-8
                                   username: root
                                   password: root
                                   driverClassName: com.mysql.jdbc.Driver
                   order3-master:
-                                  url: jdbc:mysql://172.16.2.134:33066/order0?characterEncoding=UTF-8
+                                  url: jdbc:mysql://172.16.2.134:33066/order3?characterEncoding=UTF-8
                                   username: root
                                   password: root
                                   driverClassName: com.mysql.jdbc.Driver
                   order3-slave:
-                                  url: jdbc:mysql://172.16.2.134:33066/order0?characterEncoding=UTF-8
+                                  url: jdbc:mysql://172.16.2.134:33066/order3?characterEncoding=UTF-8
                                   username: root
                                   password: root
                                   driverClassName: com.mysql.jdbc.Driver
@@ -69,6 +69,11 @@ spring:
                                   username: root
                                   password: root
                                   driverClassName: com.mysql.jdbc.Driver
+                  sharding-expand:
+                                  url: jdbc:mysql://172.16.2.134:33066/business1?characterEncoding=UTF-8
+                                  username: root
+                                  password: root
+                                  driverClassName: com.mysql.jdbc.Driver
 
       devtools:
               restart:
@@ -82,7 +87,7 @@ sharding:
                     available: 4
           datasource:
                       default:
-                                url: jdbc:mysql://172.16.2.134:33066/order0?characterEncoding=UTF-8
+                                url: jdbc:mysql://172.16.2.134:33066/shardingrule?characterEncoding=UTF-8
                                 username: root
                                 password: root
                                 driverClassName: com.mysql.jdbc.Driver
