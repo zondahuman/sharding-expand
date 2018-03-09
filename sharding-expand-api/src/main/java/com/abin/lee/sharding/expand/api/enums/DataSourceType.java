@@ -8,7 +8,8 @@ package com.abin.lee.sharding.expand.api.enums;
  */
 public enum DataSourceType {
     master,
-    slave
+    slave,
+    defaults
     ;
 
 
