@@ -70,7 +70,7 @@ sharding:
 mybatis: 
         configLocations: mybatis/mybatis-config.xml
         mapperLocations: classpath*:mybatis/mapper/*.xml
-        typeAliasesPackage: com.abin.lee.sharding.dbtable.api.model 
+        typeAliasesPackage: com.abin.lee.sharding.expand.api.model
 
 
 # LOGGING

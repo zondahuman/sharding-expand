@@ -2,7 +2,7 @@ package com.abin.lee.sharding.expand.api.controller;
 
 import com.abin.lee.sharding.expand.api.model.Order;
 import com.abin.lee.sharding.expand.api.service.OrderService;
-import com.abin.lee.sharding.expand.common.generator.SnowflakeIdWorker;
+import com.abin.lee.sharding.expand.common.generator.SnowflakeIdGeneWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,16 +24,16 @@ import java.util.List;
 public class OrderController {
     @Autowired
 //    @Qualifier("orderService")
-    OrderService orderService;
+            OrderService orderService;
 
 
     @RequestMapping(value = "/insert")
     @ResponseBody
-    public String insert(Long userId, String orderName, Long businessId){
+    public String insert(Long userId, String orderName, Long businessId) {
         String result = "FAILURE";
         try {
             Order model = new Order();
-            model.setId(SnowflakeIdWorker.getId(userId));
+            model.setId(SnowflakeIdGeneWorker.getId(userId));
             model.setVersion(0);
             model.setUpdateTime(new Date());
             model.setCreateTime(new Date());
@@ -49,10 +49,9 @@ public class OrderController {
     }
 
 
-
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public String delete(Long id){
+    public String delete(Long id) {
         String result = "FAILURE";
         try {
             this.orderService.delete(id);
@@ -64,10 +63,9 @@ public class OrderController {
     }
 
 
-
     @RequestMapping(value = "/update")
     @ResponseBody
-    public String update(Long id, String orderName, Long businessId, Integer version){
+    public String update(Long id, String orderName, Long businessId, Integer version) {
         String result = "FAILURE";
         try {
             Order model = new Order();
@@ -87,7 +85,7 @@ public class OrderController {
 
     @RequestMapping(value = "/findById")
     @ResponseBody
-    public Order findById(Long id){
+    public Order findById(Long id) {
         Order model = null;
         try {
             model = this.orderService.findById(id);
@@ -100,7 +98,7 @@ public class OrderController {
 
     @RequestMapping(value = "/findByParams")
     @ResponseBody
-    public List<Order>  findByParams(Long id, String orderName){
+    public List<Order> findByParams(Long id, String orderName) {
         List<Order> modelList = null;
         try {
             modelList = this.orderService.findByParams(id, orderName);
@@ -113,7 +111,7 @@ public class OrderController {
 
     @RequestMapping(value = "/findAll")
     @ResponseBody
-    public List<Order> findAll(){
+    public List<Order> findAll() {
         List<Order> modelList = null;
         try {
             modelList = this.orderService.findAll();
@@ -126,7 +124,7 @@ public class OrderController {
 
     @RequestMapping(value = "/deleteByParams")
     @ResponseBody
-    public String deleteByParams(Long id, String orderName){
+    public String deleteByParams(Long id, String orderName) {
         String result = "FAILURE";
         try {
             this.orderService.deleteByParams(id, orderName);
@@ -140,7 +138,7 @@ public class OrderController {
 
     @RequestMapping(value = "/countByParams")
     @ResponseBody
-    public Integer countByParams(Long id, String orderName){
+    public Integer countByParams(Long id, String orderName) {
         Integer result = 0;
         try {
             result = this.orderService.countByParams(id, orderName);
@@ -149,7 +147,6 @@ public class OrderController {
         }
         return result;
     }
-
 
 
 }

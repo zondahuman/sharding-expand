@@ -29,6 +29,7 @@ package com.abin.lee.sharding.expand.common.generator;
  */
 public class SnowflakeIdWorker {
 
+
     // ==============================Fields===========================================
     /** 开始时间截 (2015-01-01) */
     private final long twepoch = 1420041600000L;
@@ -46,7 +47,7 @@ public class SnowflakeIdWorker {
     private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
 
     /** 序列在id中占的位数 */
-    private final long sequenceBits = 8L;
+    private final long sequenceBits = 12L;
 
     /** 机器ID向左移12位 */
     private final long workerIdShift = sequenceBits;
@@ -68,7 +69,6 @@ public class SnowflakeIdWorker {
 
     /** 毫秒内序列(0~4095) */
     private long sequence = 0L;
-
 
     /** 上次生成ID的时间截 */
     private long lastTimestamp = -1L;
@@ -95,7 +95,7 @@ public class SnowflakeIdWorker {
      * 获得下一个ID (该方法是线程安全的)
      * @return SnowflakeId
      */
-    public synchronized long nextId(Long geneEnd) {
+    public synchronized long nextId() {
         long timestamp = timeGen();
 
         //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
@@ -125,7 +125,7 @@ public class SnowflakeIdWorker {
         return ((timestamp - twepoch) << timestampLeftShift) //
                 | (datacenterId << datacenterIdShift) //
                 | (workerId << workerIdShift) //
-                | sequence << 4 | geneEnd & 0xf;
+                | sequence;
     }
 
     /**
@@ -149,26 +149,14 @@ public class SnowflakeIdWorker {
         return System.currentTimeMillis();
     }
 
-
-
     //==============================Test=============================================
     /** 测试 */
     public static void main(String[] args) {
         SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
         for (int i = 0; i < 1000; i++) {
-            long id = idWorker.nextId(2L);
+            long id = idWorker.nextId();
             System.out.println(Long.toBinaryString(id));
             System.out.println(id);
-            System.out.println("取余=" + (id % 4));
         }
     }
-
-    public static Long getId(Long param){
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-        long id = idWorker.nextId(param);
-        return id;
-    }
-
 }
-
-

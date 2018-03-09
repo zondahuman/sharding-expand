@@ -21,7 +21,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.abin.lee.sharding.dbtable.api.mapper")
+@MapperScan("com.abin.lee.sharding.expand.api.mapper")
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Autowired
@@ -31,7 +31,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     public SqlSessionFactory sqlSessionFactoryBean() {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.abin.lee.sharding.dbtable.api.model");
+        bean.setTypeAliasesPackage("com.abin.lee.sharding.expand.api.model");
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
             bean.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/*.xml"));
