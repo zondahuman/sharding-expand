@@ -6,8 +6,8 @@ CREATE TABLE flicker (
 )ENGINE=InnoDB COMMENT 'flicker primary key Identity';
 
 
-REPLACE INTO Tickets64 (stub) VALUES ('a');
-SELECT LAST_INSERT_ID();
 
+REPLACE INTO flicker (stub) VALUES ('a');
+SELECT LAST_INSERT_ID();
 
 

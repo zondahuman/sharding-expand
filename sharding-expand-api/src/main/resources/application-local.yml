@@ -61,7 +61,7 @@ sharding:
                     available: 2
           datasource:
                       default:
-                                url: jdbc:mysql://172.16.2.134:33066/order0?characterEncoding=UTF-8
+                                url: jdbc:mysql://172.16.2.134:33066/shardingrule?characterEncoding=UTF-8
                                 username: root
                                 password: root
                                 driverClassName: com.mysql.jdbc.Driver

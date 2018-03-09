@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.abin.lee.sharding.expand.api.mapper.FlickerMapper" >
+
+  <resultMap id="BaseResultMap" type="com.abin.lee.sharding.expand.api.model.Flicker" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="order_name" property="orderName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+
+
+
+  <insert id="insert" parameterType="com.abin.lee.sharding.expand.api.model.Flicker" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into
+    flicker
+    (
+    id,
+    stub
+    )
+    values
+    (
+    #{record.id,jdbcType=BIGINT},
+    #{record.orderName,jdbcType=VARCHAR}
+    )
+  </insert>
+
+
+</mapper>

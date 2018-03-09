@@ -1,6 +1,8 @@
 package com.abin.lee.sharding.expand.api.controller;
 
+import com.abin.lee.sharding.expand.api.model.Flicker;
 import com.abin.lee.sharding.expand.api.model.Order;
+import com.abin.lee.sharding.expand.api.service.FlickerService;
 import com.abin.lee.sharding.expand.api.service.OrderService;
 import com.abin.lee.sharding.expand.common.generator.SnowflakeIdGeneWorker;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +24,12 @@ import java.util.List;
 @RequestMapping("/order")
 @Slf4j
 public class OrderController {
+
     @Autowired
 //    @Qualifier("orderService")
-            OrderService orderService;
-
+    OrderService orderService;
+    @Autowired
+    FlickerService flickerService;
 
     @RequestMapping(value = "/insert")
     @ResponseBody
@@ -33,7 +37,8 @@ public class OrderController {
         String result = "FAILURE";
         try {
             Order model = new Order();
-            model.setId(SnowflakeIdGeneWorker.getId(userId));
+            Long id = this.flickerService.add(new Flicker("1"));
+            model.setId(id);
             model.setVersion(0);
             model.setUpdateTime(new Date());
             model.setCreateTime(new Date());
