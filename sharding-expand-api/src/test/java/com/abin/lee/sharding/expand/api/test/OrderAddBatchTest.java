@@ -42,8 +42,9 @@ public class OrderAddBatchTest {
             int id = (int)(Math.random()*10000000L);
             nvps.add(new BasicNameValuePair("id", id+""));
 
-            SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-            Long userId = idWorker.nextId();
+//            SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+//            Long userId = idWorker.nextId();
+            Integer userId = (int)(Math.random()*10000000L);
             nvps.add(new BasicNameValuePair("userId", userId+""));
 
             int orderNameId = (int)(Math.random()*100);
