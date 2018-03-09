@@ -1,0 +1,13 @@
+CREATE TABLE flicker (
+            id bigint(20) unsigned NOT NULL auto_increment,
+            stub char(1) NOT NULL default '',
+            PRIMARY KEY  (id),
+            UNIQUE KEY stub (stub)
+)ENGINE=InnoDB COMMENT '表名汇总';
+
+
+REPLACE INTO Tickets64 (stub) VALUES ('a');
+SELECT LAST_INSERT_ID();
+
+
+
