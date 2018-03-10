@@ -11,7 +11,16 @@ select * from order0 , order1,order2,order3 ;
 
 
 
-
+use order0;
+select * from order0  ;
+select * from order1  ;
+select * from order2  ;
+select * from order3  ;
+use order1;
+select * from order0  ;
+select * from order1  ;
+select * from order2  ;
+select * from order3  ;
 
 
 
