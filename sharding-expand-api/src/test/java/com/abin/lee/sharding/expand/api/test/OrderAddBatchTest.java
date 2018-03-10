@@ -28,11 +28,51 @@ public class OrderAddBatchTest {
     public static void main(String[] args) {
         OrderAddBatchTest orderAddBatchTest = new OrderAddBatchTest();
         for (int i = 0; i < 1000; i++) {
-            orderAddBatchTest.testOrderAddBatch();
-
+            orderAddBatchTest.createOrderAddBatch(i);
         }
-
     }
+
+
+    public void createOrderAddBatch(Integer randomId) {
+        try {
+            CloseableHttpClient httpClient = HttpClientUtil.getHttpClient();
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            int id = (int)(Math.random()*10000000L);
+            nvps.add(new BasicNameValuePair("id", id+""));
+
+//            SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+//            Long userId = idWorker.nextId();
+            Integer userMaxId = 0 ;
+            if(randomId <= 500){
+                userMaxId = 500 ;
+            }else if( 500 < randomId && randomId <= 1000){
+                userMaxId = 1000 ;
+            }
+
+            Integer userId = (int)(Math.random()* userMaxId.longValue());
+            nvps.add(new BasicNameValuePair("userId", userId+""));
+
+            int orderNameId = (int)(Math.random()*100);
+            nvps.add(new BasicNameValuePair("orderName", RandomStringUtils.randomGraph(10)));
+
+            Long businessId = (long)(Math.random()*1000000000000000L);
+            nvps.add(new BasicNameValuePair("businessId", businessId+""));
+            HttpPost httpPost = new HttpPost(httpURL);
+//            httpPost.setHeader("Cookie", getCookie());
+//            httpPost.setHeader("Cookie", "JSESSIONID=7588C522A6900BFD581AA18FDA64D347");
+
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+            System.out.println("Executing request: " + httpPost.getRequestLine());
+            HttpResponse response = httpClient.execute(httpPost);
+            System.out.println("----------------------------------------");
+            System.out.println(response.getStatusLine());
+            System.out.println(EntityUtils.toString(response.getEntity()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
 
     @Test
     public void testOrderAddBatch() {

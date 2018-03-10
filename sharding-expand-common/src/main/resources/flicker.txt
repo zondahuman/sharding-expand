@@ -1,3 +1,4 @@
+use shardingrule;
 DROP TABLE IF EXISTS flicker;
 CREATE TABLE IF NOT EXISTS flicker (
             id bigint(20) unsigned NOT NULL auto_increment,
@@ -8,16 +9,8 @@ CREATE TABLE IF NOT EXISTS flicker (
 
 
 
+
 REPLACE INTO flicker (stub) VALUES ('a');
 SELECT LAST_INSERT_ID();
 
 
-
-
-
-CREATE TABLE flicker (
-            id bigint(20) unsigned NOT NULL auto_increment,
-            stub char(1) NOT NULL default '',
-            PRIMARY KEY  (id),
-            UNIQUE KEY stub (stub)
-)ENGINE=InnoDB COMMENT 'flicker primary key Identity';
