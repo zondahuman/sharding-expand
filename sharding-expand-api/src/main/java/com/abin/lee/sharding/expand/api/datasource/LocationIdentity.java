@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface LocationIdentity {
-    DefaultDataType source() default DefaultDataType.defaults;
+    DefaultDataType source() default DefaultDataType.defaultDataSource;
 }

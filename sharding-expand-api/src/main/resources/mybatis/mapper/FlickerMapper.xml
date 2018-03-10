@@ -4,12 +4,7 @@
 
   <resultMap id="BaseResultMap" type="com.abin.lee.sharding.expand.api.model.Flicker" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="business_id" property="businessId" jdbcType="BIGINT" />
-    <result column="order_name" property="orderName" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="stub" property="stub" jdbcType="VARCHAR" />
   </resultMap>
 
 
@@ -21,15 +16,52 @@
     insert into
     flicker
     (
-    id,
     stub
     )
     values
     (
-    #{record.id,jdbcType=BIGINT},
-    #{record.orderName,jdbcType=VARCHAR}
+      '1'
     )
   </insert>
+
+
+  <insert id="generate" parameterType="java.lang.Long" >
+
+      <selectKey resultType="java.lang.Long" keyProperty="id"  order="AFTER" >
+            SELECT LAST_INSERT_ID()
+      </selectKey>
+
+      REPLACE INTO
+        flicker
+      (
+        stub
+      )
+        VALUES
+      (
+        '1'
+      );
+
+  </insert>
+
+
+
+  <insert id="add" parameterType="com.abin.lee.sharding.expand.api.model.Flicker" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into
+    flicker
+    (
+    stub
+    )
+    values
+    (
+      '1'
+    )
+  </insert>
+
+
+
 
 
 </mapper>

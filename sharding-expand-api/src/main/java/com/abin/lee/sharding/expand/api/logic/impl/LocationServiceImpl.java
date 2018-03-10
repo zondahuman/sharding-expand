@@ -38,7 +38,7 @@ public class LocationServiceImpl implements LocationService {
 
 
     @Override
-    @LocationIdentity(source = DefaultDataType.defaults)
+    @LocationIdentity(source = DefaultDataType.dataSource)
     @Transactional(propagation= Propagation.REQUIRES_NEW)
     public String locationDb(Long id) {
         Long shardGroupId = this.shardGroupService.findByIdRange(id);
@@ -49,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
 
 
     @Override
-    @LocationIdentity(source = DefaultDataType.defaults)
+    @LocationIdentity(source = DefaultDataType.dataSource)
     @Transactional(propagation= Propagation.REQUIRES_NEW)
     public String locationTable(Long id) {
         Long shardGroupId = this.shardGroupService.findByIdRange(id);

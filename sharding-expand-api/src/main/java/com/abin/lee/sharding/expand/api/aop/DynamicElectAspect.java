@@ -2,18 +2,11 @@ package com.abin.lee.sharding.expand.api.aop;
 
 import com.abin.lee.sharding.expand.api.datasource.DynamicDataSourceContextHolder;
 import com.abin.lee.sharding.expand.api.datasource.LocationIdentity;
-import com.abin.lee.sharding.expand.api.datasource.SelectIdentity;
 import com.abin.lee.sharding.expand.api.enums.DefaultDataType;
-import com.abin.lee.sharding.expand.api.enums.LocationSwitchEnum;
 import com.abin.lee.sharding.expand.api.logic.LocationService;
 import com.abin.lee.sharding.expand.api.util.ShardingExchange;
-import com.abin.lee.sharding.expand.common.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.StringUtils;
-import org.apache.ibatis.javassist.*;
-import org.apache.ibatis.javassist.bytecode.CodeAttribute;
-import org.apache.ibatis.javassist.bytecode.LocalVariableAttribute;
-import org.apache.ibatis.javassist.bytecode.MethodInfo;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,8 +18,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 @Aspect
 @Order(-1) // 保证该AOP在@Transactional之前执行
@@ -55,7 +46,7 @@ public class DynamicElectAspect {
         log.info("DATABASE-------------= " + dataSource);
         //为了省事，其他代码就不写了，
         // 切换数据源
-        if(StringUtils.equals(typeName, DefaultDataType.defaults.name())) {
+        if (StringUtils.equals(typeName, DefaultDataType.dataSource.name())) {
             DynamicDataSourceContextHolder.setDataSourceType(dataSource);
         }
 
@@ -74,7 +65,6 @@ public class DynamicElectAspect {
         }
         return result;
     }
-
 
 
     @After("@annotation(locationIdentity)")

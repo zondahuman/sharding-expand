@@ -13,6 +13,10 @@ public interface FlickerMapper {
 
     Long insert(Flicker record);
 
+    Long generate(Flicker record);
+
+    Long add(Flicker record);
+
 
 
 }

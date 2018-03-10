@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,12 +32,31 @@ public class FlickerServiceImpl implements FlickerService {
 
 
     @Override
-    @LocationIdentity(source = DefaultDataType.defaults)
-    public Long add(Flicker model) {
-        Long id = this.flickerMapper.insert(model);
+    @LocationIdentity(source = DefaultDataType.dataSource)
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    public Long insert(Flicker model) {
+        this.flickerMapper.insert(model);
+        Long id = model.getId() ;
         return id;
     }
 
+    @Override
+    @LocationIdentity(source = DefaultDataType.dataSource)
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    public Long add(Flicker model) {
+        this.flickerMapper.add(model);
+        Long id = model.getId() ;
+        return id;
+    }
+
+    @Override
+    @LocationIdentity(source = DefaultDataType.dataSource)
+    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    public Long generate(Flicker model) {
+        this.flickerMapper.generate(model);
+        Long id = model.getId() ;
+        return id;
+    }
 
 
 

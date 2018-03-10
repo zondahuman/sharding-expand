@@ -37,7 +37,7 @@ public class OrderController {
         String result = "FAILURE";
         try {
             Order model = new Order();
-            Long id = this.flickerService.add(new Flicker("1"));
+            Long id = this.flickerService.generate(new Flicker("1"));
             model.setId(id);
             model.setVersion(0);
             model.setUpdateTime(new Date());

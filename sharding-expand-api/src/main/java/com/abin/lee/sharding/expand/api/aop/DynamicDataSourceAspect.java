@@ -64,9 +64,9 @@ public class DynamicDataSourceAspect {
             functionId = (long) nameAndArgs.get("id");
         }
         log.info("datasource ==  ", JsonUtil.toJson(DynamicDataSourceContextHolder.dataSourceIds));
-        DynamicDataSourceContextHolder.setDataSourceType("dataSource");
+//        DynamicDataSourceContextHolder.setDataSourceType("dataSource");
         String businessName = this.locationService.locationDb(functionId);
-        DynamicDataSourceContextHolder.clearDataSourceType();
+//        DynamicDataSourceContextHolder.clearDataSourceType();
 
         String typeName = typeName(joinPoint);
         String dataSource = businessName + "-" + typeName;

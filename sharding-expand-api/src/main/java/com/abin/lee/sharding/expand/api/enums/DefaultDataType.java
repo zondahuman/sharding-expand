@@ -8,8 +8,8 @@ package com.abin.lee.sharding.expand.api.enums;
  */
 public enum DefaultDataType {
 
-    defaults,
-    common
+    dataSource,
+    defaultDataSource
     ;
 
 

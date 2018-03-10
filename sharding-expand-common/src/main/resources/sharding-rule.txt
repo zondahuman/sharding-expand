@@ -27,18 +27,19 @@ create table fragment (
 )ENGINE=InnoDB COMMENT '表名汇总';
 
 
-
-
-
-
-
+CREATE TABLE flicker (
+            id bigint(20) unsigned NOT NULL auto_increment,
+            stub char(1) NOT NULL default '',
+            PRIMARY KEY  (id),
+            UNIQUE KEY stub (stub)
+)ENGINE=InnoDB COMMENT 'flicker primary key Identity';
 
 
 
 INSERT INTO `shardingrule`.`shard_group`(`id`, `name`, `writable`, `start_id`, `end_id`) VALUES (1, 'OrderShardGroup0', 1, 0, 1000);
 
-INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1000, 'order0-master', 1, '0');
-INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1001, 'order1-master', 1, '1');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1000, 'order0', 1, '0');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1001, 'order1', 1, '1');
 
 
 INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10001, 'order0', 1000, 0, 500);
@@ -54,14 +55,6 @@ INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end
 
 
 
-
-
-
-
-INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1000, 'order0', 1, '0');
-INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1001, 'order1', 1, '1,2');
-INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1002, 'order2', 1, '3,4');
-INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1003, 'order3', 1, '5');
 
 
 

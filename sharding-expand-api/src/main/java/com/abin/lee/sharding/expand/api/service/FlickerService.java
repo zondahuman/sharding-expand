@@ -14,5 +14,10 @@ public interface FlickerService {
 
     Long add(Flicker model);
 
+    Long insert(Flicker model);
+
+
+    Long generate(Flicker model);
+
 
 }
