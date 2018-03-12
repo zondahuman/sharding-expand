@@ -79,34 +79,32 @@
     <profiles>
         <profile>
             <id>dev</id>
-            <properties>
-                <activatedProperties>dev</activatedProperties>
-            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
         </profile>
         <profile>
             <id>local</id>
             <properties>
-                <activatedProperties>local</activatedProperties>
+                <profileActive>local</profileActive>
             </properties>
         </profile>
         <profile>
             <id>beta</id>
             <properties>
-                <activatedProperties>beta</activatedProperties>
+                <profileActive>beta</profileActive>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
-                <activatedProperties>prod</activatedProperties>
+                <profileActive>prod</profileActive>
             </properties>
         </profile>
     </profiles>
-
-
 
 
     <build>
