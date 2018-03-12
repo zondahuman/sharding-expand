@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class OrderAddTest {
 
-    private static final String httpURL = "http://localhost:8099/order/insert";
-//    private static final String httpURL = "http://172.16.2.132:8080/order/insert";
+//    private static final String httpURL = "http://localhost:8099/order/insert";
+    private static final String httpURL = "http://172.16.2.132:8080/order/insert";
 
     @Test
     public void testOrderAdd() {
