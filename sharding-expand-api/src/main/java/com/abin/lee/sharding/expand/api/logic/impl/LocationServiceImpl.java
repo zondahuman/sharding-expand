@@ -6,9 +6,7 @@ import com.abin.lee.sharding.expand.api.logic.LocationService;
 import com.abin.lee.sharding.expand.api.service.FragmentService;
 import com.abin.lee.sharding.expand.api.service.ShardGroupService;
 import com.abin.lee.sharding.expand.api.service.ShardService;
-import com.abin.lee.sharding.expand.api.util.ShardingExchange;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,15 +29,10 @@ public class LocationServiceImpl implements LocationService {
     @Resource
     ShardService shardService;
 
-    @Autowired
-    ShardingExchange shardingExchange;
-
-
-
 
     @Override
     @LocationIdentity(source = DefaultDataType.dataSource)
-    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String locationDb(Long id) {
         Long shardGroupId = this.shardGroupService.findByIdRange(id);
         String dbName = this.shardService.findDbNameByGroupId(id, shardGroupId);
@@ -47,28 +40,15 @@ public class LocationServiceImpl implements LocationService {
     }
 
 
-
     @Override
     @LocationIdentity(source = DefaultDataType.dataSource)
-    @Transactional(propagation= Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String locationTable(Long id) {
         Long shardGroupId = this.shardGroupService.findByIdRange(id);
         Long shardId = this.shardService.findShardIdByGroupId(id, shardGroupId);
         String tableName = this.fragmentService.findTableNameById(id, shardId);
         return tableName;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

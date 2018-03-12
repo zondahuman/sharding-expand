@@ -4,7 +4,6 @@ import com.abin.lee.sharding.expand.api.datasource.DynamicDataSourceContextHolde
 import com.abin.lee.sharding.expand.api.datasource.LocationIdentity;
 import com.abin.lee.sharding.expand.api.enums.DefaultDataType;
 import com.abin.lee.sharding.expand.api.logic.LocationService;
-import com.abin.lee.sharding.expand.api.util.ShardingExchange;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -25,8 +24,6 @@ import java.lang.reflect.Method;
 @Slf4j
 public class DynamicElectAspect {
 
-    @Autowired
-    ShardingExchange shardingExchange;
     @Autowired
     LocationService locationService;
 

@@ -82,7 +82,7 @@ spring:
 #                      exclude: WEB-INF/**   #classpath目录下的WEB-INF文件夹内容修改不重启
 sharding:
           database:
-                    available: 2
+                    available: 4
           table:
                     available: 4
           datasource:

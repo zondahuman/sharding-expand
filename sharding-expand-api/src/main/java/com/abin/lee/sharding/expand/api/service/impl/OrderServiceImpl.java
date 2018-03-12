@@ -7,7 +7,6 @@ import com.abin.lee.sharding.expand.api.mapper.OrderMapper;
 import com.abin.lee.sharding.expand.api.model.Order;
 import com.abin.lee.sharding.expand.api.model.OrderExample;
 import com.abin.lee.sharding.expand.api.service.OrderService;
-import com.abin.lee.sharding.expand.api.util.ShardingExchange;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +28,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderMapper orderMapper;
     @Autowired
-    ShardingExchange shardingExchange;
-    @Autowired
     LocationService locationService;
-
-
 
 
     @Override
     @SelectIdentity(source = DataSourceType.master)
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
-    @Transactional(propagation= Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void add(Long userId, Order model) {
         String tableName = this.locationService.locationTable(userId);
         log.info("TABLENAME-------------= " + tableName);
@@ -51,12 +46,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @SelectIdentity(source = DataSourceType.master)
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
-    @Transactional(propagation= Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void update(Long id, Order model) {
         String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         Order order = this.orderMapper.selectByPrimaryKey(tableName, id);
-        if(ObjectUtils.notEqual(null, order)){
+        if (ObjectUtils.notEqual(null, order)) {
             order.setBusinessId(model.getBusinessId());
             order.setId(model.getId());
             order.setOrderName(model.getOrderName());
@@ -70,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @SelectIdentity(source = DataSourceType.master)
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
-    @Transactional(propagation= Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(Long id) {
         String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
@@ -80,12 +75,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @SelectIdentity(source = DataSourceType.master)
 //    @Transactional(propagation= Propagation.NOT_SUPPORTED)
-    @Transactional(propagation= Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteByParams(Long id, String orderName) {
         String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         OrderExample example = new OrderExample();
-        String condition = "%" + orderName + "%" ;
+        String condition = "%" + orderName + "%";
         example.createCriteria().andOrderNameLike(condition);
         this.orderMapper.deleteByExample(tableName, example);
 
@@ -93,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @SelectIdentity(source = DataSourceType.slave)
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Order findById(Long id) {
         String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
@@ -103,6 +98,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 严格来说这个方法不对，这里只是为了测试下使用方法，正常来说这个方法是通过ES或者Hive来实现
+     *
      * @param id
      * @param orderName
      * @return
@@ -110,12 +106,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
 //    @ShardingCache(expiry=7200)//缓存2小时
     @SelectIdentity(source = DataSourceType.slave)
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<Order> findByParams(Long id, String orderName) {
-        String tableName = this.shardingExchange.shardingTableName(id);
+        String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         OrderExample example = new OrderExample();
-        String condition = "%" + orderName + "%" ;
+        String condition = "%" + orderName + "%";
         example.createCriteria().andOrderNameLike(condition);
         List<Order> list = this.orderMapper.selectByExample(tableName, example);
         return list;
@@ -123,11 +119,12 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 严格来说这个方法不对，这里只是为了测试下使用方法，正常来说这个方法是通过ES或者Hive来实现
+     *
      * @return
      */
     @Override
     @SelectIdentity(source = DataSourceType.slave)
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<Order> findAll() {
         OrderExample example = new OrderExample();
         List<Order> businessList = this.orderMapper.selectByExample("", example);
@@ -136,24 +133,23 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 严格来说这个方法不对，这里只是为了测试下使用方法，正常来说这个方法是通过ES或者Hive来实现
+     *
      * @param id
      * @param orderName
      * @return
      */
     @Override
     @SelectIdentity(source = DataSourceType.slave)
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public int countByParams(Long id, String orderName) {
-        String tableName = this.shardingExchange.shardingTableName(id);
+        String tableName = this.locationService.locationTable(id);
         log.info("TABLENAME-------------= " + tableName);
         OrderExample example = new OrderExample();
-        String condition = "%" + orderName + "%" ;
+        String condition = "%" + orderName + "%";
         example.createCriteria().andOrderNameLike(condition);
         Integer total = this.orderMapper.countByExample(tableName, example);
         return total;
     }
-
-
 
 
 }

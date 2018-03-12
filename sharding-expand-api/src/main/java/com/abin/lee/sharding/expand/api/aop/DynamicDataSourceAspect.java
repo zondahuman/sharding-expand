@@ -2,10 +2,8 @@ package com.abin.lee.sharding.expand.api.aop;
 
 import com.abin.lee.sharding.expand.api.datasource.DynamicDataSourceContextHolder;
 import com.abin.lee.sharding.expand.api.datasource.SelectIdentity;
-import com.abin.lee.sharding.expand.api.enums.BusinessNameType;
 import com.abin.lee.sharding.expand.api.enums.LocationSwitchEnum;
 import com.abin.lee.sharding.expand.api.logic.LocationService;
-import com.abin.lee.sharding.expand.api.util.ShardingExchange;
 import com.abin.lee.sharding.expand.common.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.*;
@@ -32,8 +30,6 @@ import java.util.Map;
 @Slf4j
 public class DynamicDataSourceAspect {
 
-    @Autowired
-    ShardingExchange shardingExchange;
     @Autowired
     LocationService locationService;
 
@@ -76,7 +72,6 @@ public class DynamicDataSourceAspect {
         DynamicDataSourceContextHolder.setDataSourceType(dataSource);
 
     }
-
 
 
     public static String typeName(JoinPoint joinPoint) throws Throwable {

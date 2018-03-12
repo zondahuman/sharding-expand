@@ -4,7 +4,6 @@ import com.abin.lee.sharding.expand.api.mapper.ShardMapper;
 import com.abin.lee.sharding.expand.api.model.Shard;
 import com.abin.lee.sharding.expand.api.model.ShardExample;
 import com.abin.lee.sharding.expand.api.service.ShardService;
-import com.abin.lee.sharding.expand.api.util.ShardingExchange;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,6 @@ public class ShardServiceImpl implements ShardService {
 
     @Autowired
     ShardMapper shardMapper;
-    @Autowired
-    ShardingExchange shardingExchange;
 
 
     @Override
@@ -58,8 +55,16 @@ public class ShardServiceImpl implements ShardService {
 
     @Override
     public String findDbNameByGroupId(Long id, Long shardGroupId) {
-        Integer avaliableCount = this.shardingExchange.shardingDatabaseGene();
-        long hashValue = id & (avaliableCount - 1);
+        ShardExample examples = new ShardExample();
+        examples.createCriteria().andGroupIdEqualTo(shardGroupId);
+        List<Shard> dbList = this.shardMapper.selectByExample(examples);
+        Integer avaliableDbCount = 0;
+        if (CollectionUtils.isEmpty(dbList)) {
+            throw new RuntimeException("db count is not null");
+        } else {
+            avaliableDbCount = dbList.size();
+        }
+        long hashValue = id & (avaliableDbCount - 1);
         ShardExample example = new ShardExample();
         example.createCriteria().andGroupIdEqualTo(shardGroupId);
         List<Shard> modelList = this.shardMapper.selectByExample(example);
@@ -75,11 +80,18 @@ public class ShardServiceImpl implements ShardService {
     }
 
 
-
     @Override
     public Long findShardIdByGroupId(Long id, Long shardGroupId) {
-        Integer avaliableCount = this.shardingExchange.shardingDatabaseGene();
-        long hashValue = id & (avaliableCount - 1);
+        ShardExample examples = new ShardExample();
+        examples.createCriteria().andGroupIdEqualTo(shardGroupId);
+        List<Shard> dbList = this.shardMapper.selectByExample(examples);
+        Integer avaliableDbCount = 0;
+        if (CollectionUtils.isEmpty(dbList)) {
+            throw new RuntimeException("db count is not null");
+        } else {
+            avaliableDbCount = dbList.size();
+        }
+        long hashValue = id & (avaliableDbCount - 1);
         ShardExample example = new ShardExample();
         example.createCriteria().andGroupIdEqualTo(shardGroupId);
         List<Shard> modelList = this.shardMapper.selectByExample(example);
@@ -93,10 +105,6 @@ public class ShardServiceImpl implements ShardService {
         }
         return null;
     }
-
-
-
-
 
 
 }

@@ -23,3 +23,16 @@ delete from order2;
 delete from order3;
 
 
+use order2;
+delete from order0;
+delete from order1;
+delete from order2;
+delete from order3;
+
+use order3;
+delete from order0;
+delete from order1;
+delete from order2;
+delete from order3;
+
+
