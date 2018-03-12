@@ -31,7 +31,18 @@ public class OrderAddTest {
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
             int id = (int)(Math.random()*10000000L);
             nvps.add(new BasicNameValuePair("id", id+""));
-            int userId = (int)(Math.random()*100);
+
+            int randomId = (int)(Math.random()*1000);
+
+            Integer userMaxId = 0 ;
+            if(randomId <= 500){
+                userMaxId = 500 ;
+            }else if( 500 < randomId && randomId <= 1000){
+                userMaxId = 1000 ;
+            }
+
+            Integer userId = (int)(Math.random()* userMaxId.longValue());
+
             nvps.add(new BasicNameValuePair("userId", userId+""));
             int orderNameId = (int)(Math.random()*100);
 //            nvps.add(new BasicNameValuePair("orderName", ChineseRandomUtil.getSpecifiedChinese(10)));
