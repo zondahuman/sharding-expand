@@ -98,23 +98,23 @@ mybatis:
         typeAliasesPackage: com.abin.lee.sharding.expand.api.model
 
 
-# LOGGING
+# LOGGING  INFO  DEBUG
 logging:
         level:
               root: INFO
               org:
-                  springframework: DEBUG
-                  hibernate: DEBUG
+                  springframework: INFO
+                  hibernate: INFO
 #        path: F:\\
 #        file: log.log
               com:
-                  ibatis: DEBUG
+                  ibatis: INFO
                   abin:
                         lee:
                             sharding:
                                       dbtable:
                                               api:
-                                                  mapper: DEBUG
+                                                  mapper: INFO
 
 
 
