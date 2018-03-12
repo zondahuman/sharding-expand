@@ -23,8 +23,8 @@ import java.util.List;
  */
 public class OrderAddBatchTest {
 
-//    private static final String httpURL = "http://localhost:8099/order/insert";
-    private static final String httpURL = "http://172.16.2.132:8080/order/insert";
+    private static final String httpURL = "http://localhost:8099/order/insert";
+//    private static final String httpURL = "http://172.16.2.132:8080/order/insert";
 
     public static void main(String[] args) {
         OrderAddBatchTest orderAddBatchTest = new OrderAddBatchTest();
