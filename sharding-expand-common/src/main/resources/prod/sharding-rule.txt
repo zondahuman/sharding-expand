@@ -1,0 +1,61 @@
+DROP DATABASE IF EXISTS shardingrule;
+CREATE DATABASE IF NOT EXISTS shardingrule;
+use shardingrule;
+
+create table shard_group (
+  id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
+  name varchar(64)  COMMENT 'db group name',
+  writable boolean  COMMENT 'writable',
+  start_id bigint(20) NOT NULL COMMENT 'startId',
+  end_id bigint(20) NOT NULL COMMENT 'endId'
+)ENGINE=InnoDB COMMENT '数据库集群名汇总';
+
+create table shard (
+  id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
+  name varchar(64)  COMMENT 'db name',
+  group_id bigint(20) NOT NULL COMMENT '数据库集群id',
+  hash_value varchar(1024)  COMMENT 'id hashvalue'
+)ENGINE=InnoDB COMMENT '数据库名汇总';
+
+
+create table fragment (
+  id bigint(20) PRIMARY KEY NOT NULL COMMENT '主键id',
+  name varchar(64)  COMMENT 'table name',
+  shard_id bigint(20) NOT NULL COMMENT '数据库id',
+  start_id bigint(20) NOT NULL COMMENT 'startId',
+  end_id bigint(20) NOT NULL COMMENT 'endId'
+)ENGINE=InnoDB COMMENT '表名汇总';
+
+
+
+
+INSERT INTO `shardingrule`.`shard_group`(`id`, `name`, `writable`, `start_id`, `end_id`) VALUES (1, 'OrderShardGroup0', 1, 0, 1000);
+
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1000, 'order0', 1, '0');
+INSERT INTO `shardingrule`.`shard`(`id`, `name`, `group_id`, `hash_value`) VALUES (1001, 'order1', 1, '1');
+
+
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10001, 'order0', 1000, 0, 250);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10002, 'order1', 1000, 250, 500);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10003, 'order2', 1000, 500, 750);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10004, 'order3', 1000, 750, 1000);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10005, 'order0', 1001, 0, 250);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10006, 'order1', 1001, 250, 500);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10007, 'order2', 1001, 500, 750);
+INSERT INTO `shardingrule`.`fragment`(`id`, `name`, `shard_id`, `start_id`, `end_id`) VALUES (10008, 'order3', 1001, 750, 1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
