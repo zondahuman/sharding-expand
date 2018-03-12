@@ -118,8 +118,8 @@ logging:
 
 
 
-
-debug: true
+# true false
+debug: false
 
 
 

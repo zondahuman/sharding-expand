@@ -2,8 +2,9 @@
 spring:
         profiles:
 #                  active: dev
-                  active: beta
+#                  active: beta
 #                  active: local
+                  active: @profileActive@
 
 
 
