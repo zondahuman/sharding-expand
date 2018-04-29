@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
  * Created by abin on 2018/2/28 0:12.
  * sharding-dbtable
  * com.abin.lee.sharding.dbtable.api.util
+ * dbName = id % dbTotalCount
+ * tableName = (id / dbTotalCount) % tableTtoalCount
  */
 @Slf4j
 @Component
